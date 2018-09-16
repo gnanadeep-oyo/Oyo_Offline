@@ -41,19 +41,26 @@ public class checkinout extends Activity implements View.OnClickListener {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Date eindate = null;
+                Date eoutdate=null;
+                    if(!echckin.getText().toString().isEmpty())
+                    { String[] temp=echckin.getText().toString().split("/",3);
+                        eindate=new Date(Integer.parseInt(temp[2])-1900,Integer.parseInt(temp[1])-1,Integer.parseInt(temp[0])+0);
+                    }
+                    if(!echckout.getText().toString().isEmpty())
+                    { String[] temp=echckout.getText().toString().split("/",3);
+                        eoutdate=new Date(Integer.parseInt(temp[2])-1900,Integer.parseInt(temp[1])-1,Integer.parseInt(temp[0])+0);
+                       }
 
-
-
-                if(outdate==null||indate==null)
+                if(echckin.getText().toString().isEmpty()||echckout.getText().toString().isEmpty())
                     Toast.makeText(getApplicationContext(),"Checkout or Checkin Dates could not be empty",Toast.LENGTH_LONG).show();
 
 
-               else if(indate.compareTo(Calendar.getInstance().getTime())<0)
+               else if(eindate.compareTo(Calendar.getInstance().getTime())<0)
                 {Toast.makeText(getApplicationContext(),"Checkin date must be greater than Current date",Toast.LENGTH_LONG).show();
 
-
                 }
-                else if(outdate.compareTo(indate)<=0){
+                else if(eoutdate.compareTo(eindate)<=0){
                     Toast.makeText(getApplicationContext(),"Checkout date must be greater than Checkin",Toast.LENGTH_LONG).show();
                 }
                 else{
@@ -112,12 +119,13 @@ public class checkinout extends Activity implements View.OnClickListener {
                         {
                             echckin.setText(s);
                             datein=s;
-                            indate=new Date(year,monthOfYear,dayOfMonth);
-                        }
+                            indate=new Date(year-1900,monthOfYear,dayOfMonth);
+
+                    }
                         else
                         { dateout=s;
                             echckout.setText(s);
-                            outdate=new Date(year,monthOfYear,dayOfMonth);}
+                            outdate=new Date(year-1900,monthOfYear,dayOfMonth);}
 
                     }
                 }, mYear, mMonth, mDay);

@@ -80,12 +80,14 @@ public class Guest extends Activity implements View.OnClickListener {
 
            else {
                 Intent i = new Intent(getApplicationContext(), SmsActivity.class);
-                i.putExtra("guestno", guestno);
+
                 Double longitude=getIntent().getExtras().getDouble("longitude");
                 Double latitude=getIntent().getExtras().getDouble("latitude");
                 String datein=getIntent().getExtras().getString("checkin");
                 String dateout=getIntent().getExtras().getString("checkout");
-
+                i.putExtra("guestno", guestno);
+                i.putExtra("checkin",datein);
+                i.putExtra("checkout",dateout);
                 SmsManager s= SmsManager.getDefault();
                 // Toast.makeText(getApplicationContext(),indate.toString()+" "+outdate.toString(),Toast.LENGTH_LONG).show();
                 s.sendTextMessage(Variables.serverno,null,"OYOH " + Double.toString(longitude) + " " + Double.toString(latitude)+" "+datein+" "+dateout,null,null);

@@ -17,9 +17,10 @@
         android:textStyle="normal"
         android:text="WHERE ARE YOU LOOKING TO STAY?" />
 
-    <EditText
+
+    <AutoCompleteTextView
         android:id="@+id/location"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="123dp"

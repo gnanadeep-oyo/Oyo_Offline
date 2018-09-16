@@ -7,8 +7,12 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
 import android.os.Build;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
@@ -21,12 +25,19 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,7 +54,7 @@ import static android.Manifest.permission.SEND_SMS;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
-
+    private static ArrayList<String> localities=new ArrayList<>();
     private ArrayList<String> permissionsToRequest;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
     private ArrayList<String> permissions = new ArrayList<>();
@@ -51,7 +62,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private final static int ALL_PERMISSIONS_RESULT = 101;
     LocationTrack locationTrack;
     TextView textView;
-    EditText locationtext;
+   AutoCompleteTextView locationtext;
     FloatingActionButton f;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +70,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.location);
+        try {
+            initalizedb();
+        } catch (IOException e) {
+            System.out.print("DB error");
+        }
+        locationtext = (AutoCompleteTextView) findViewById(R.id.location);
 
-        locationtext = (EditText) findViewById(R.id.location);
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (this,android.R.layout.simple_selectable_list_item, localities);
+
+        locationtext.setThreshold(2);
+        locationtext.setDropDownBackgroundResource(R.drawable.rectangle);
+        locationtext.setAdapter(adapter);
         f=(FloatingActionButton)findViewById(R.id.locfab);
         textView=(TextView)findViewById(R.id.cur) ;
         f.setOnClickListener(this);
@@ -127,6 +151,58 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     }
 
+    private void initalizedb() throws IOException {
+
+
+
+        SQLiteDatabase db = this.openOrCreateDatabase("LocationDB", MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS Location (name varchar, lat varchar, lon varchar);");
+        long count = DatabaseUtils.queryNumEntries(db, "Location");
+        if (count == 0) {
+
+            InputStream inputStream = getResources().openRawResource(R.raw.location);
+            InputStreamReader isr = new InputStreamReader(inputStream);
+
+            BufferedReader buffer = new BufferedReader(isr);
+
+            String line = "";
+
+            db.beginTransaction();
+
+            buffer.readLine();
+
+            while ((line = buffer.readLine()) != null) {
+
+                String[] str = line.split(",", 3);  // defining 3 columns with null or blank field //values acceptance
+                String name = str[0].toString();
+
+                String lat =str[1].toString();
+                String longe=str[2].toString();
+                String sql = "INSERT or replace INTO Location (name,lat,lon) VALUES("+name+" , "+lat+","+longe+")" ;
+                db.execSQL(sql);
+
+
+
+            }
+            count = DatabaseUtils.queryNumEntries(db, "Location");
+            Toast.makeText(getApplicationContext(),count+"",Toast.LENGTH_LONG).show();
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+
+        }
+
+        {
+
+           Cursor c= db.rawQuery("Select name from Location",null);
+
+            while (c.moveToNext())
+            {
+                localities.add(c.getString(0));
+            }
+            c.close();
+        }
+    }
 
     private ArrayList<String> findUnAskedPermissions(ArrayList<String> wanted) {
         ArrayList<String> result = new ArrayList<String>();
@@ -216,9 +292,26 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
         else{
 
+
+
+
             Intent i=new Intent(MainActivity.this,checkinout.class);
-            i.putExtra("location",locationtext.getText().toString());
-            startActivity(i);
+
+            SQLiteDatabase db = this.openOrCreateDatabase("LocationDB", MODE_PRIVATE, null);
+           Cursor c= db.rawQuery("Select lat,lon from location where name='"+locationtext.getText().toString()+"'",null);
+
+           if(c.moveToNext())
+            {   double longitude=Double.parseDouble(c.getString(1));
+                double latitude=Double.parseDouble(c.getString(0));
+                i.putExtra("longitude",longitude);
+                i.putExtra("latitude",latitude);
+                startActivity(i);
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(),"Invalid Location, Please select the location",Toast.LENGTH_LONG).show();
+            }
+
         }
     }
 }

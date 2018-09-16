@@ -97,6 +97,11 @@ public class SmsActivity extends Activity implements OnItemClickListener {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Intent i= new Intent(SmsActivity.this,BookingConf.class);
             i.putExtra("book_conf",smsMessage);
+            String datein=getIntent().getExtras().getString("checkin");
+            String dateout=getIntent().getExtras().getString("checkout");
+            i.putExtra("guestno", getIntent().getExtras().getString("guestno"));
+            i.putExtra("checkin",datein);
+            i.putExtra("checkout",dateout);
             startActivity(i);
         }
         else{
