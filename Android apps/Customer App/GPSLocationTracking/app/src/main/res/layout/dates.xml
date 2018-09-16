@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rectangleram"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="320dp"
+        android:lineSpacingExtra="6sp"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        android:text="WHAT DATES WOULD YOU STAY FOR?" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:layout_alignParentLeft="true">
+
+        <EditText
+            android:id="@+id/etext1"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="350dp"
+            android:backgroundTint="#b3ffffff"
+            android:hint="Check In"
+            android:textColor="#b3ffffff"
+            android:inputType="none"
+            android:lineSpacingExtra="20sp"
+            android:textColorHint="#b3ffffff"
+            android:textSize="24sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="337dp"
+
+            android:lineSpacingExtra="20sp"
+            android:text="→"
+            android:textColor="#b3ffffff"
+            android:textSize="28sp" />
+
+        <EditText
+            android:id="@+id/etext2"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:textColor="#b3ffffff"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="350dp"
+            android:backgroundTint="#b3ffffff"
+            android:hint="Check Out"
+            android:inputType="none"
+            android:lineSpacingExtra="20sp"
+            android:textColorHint="#b3ffffff"
+            android:textSize="24sp"
+            android:visibility="visible" />
+
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/datesfab1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="26dp"
+        android:layout_marginEnd="25dp"
+        android:backgroundTint="#ffffff"
+        android:src="@drawable/arrow"
+        android:text="→"
+        android:layout_marginRight="25dp"
+        android:layout_alignParentRight="true" />
+
+
+
+</RelativeLayout>

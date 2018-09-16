@@ -2,6 +2,7 @@ package com.journaldev.gpslocationtracking;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.os.Build;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -38,7 +41,7 @@ import static android.Manifest.permission.RECEIVE_SMS;
 import static android.Manifest.permission.SEND_SMS;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener {
 
 
     private ArrayList<String> permissionsToRequest;
@@ -47,31 +50,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private final static int ALL_PERMISSIONS_RESULT = 101;
     LocationTrack locationTrack;
-Button checkin;
-Button checkout;
-String datein=null;
-Date indate;
-Date outdate;
-String dateout=null;
-EditText echckin;
-EditText echckout;
+    TextView textView;
+    EditText locationtext;
+    FloatingActionButton f;
 
-    String s;
     protected void onCreate(Bundle savedInstanceState) {
 
 
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.location);
 
-        echckin=(EditText)findViewById(R.id.echeckin);
-        echckout=(EditText)findViewById(R.id.echeckout);
-        checkin=(Button)findViewById(R.id.checkin);
-        checkout=(Button)findViewById(R.id.checkout);
-        checkin.setOnClickListener(this);
-        checkout.setOnClickListener(this);
-        echckin.setOnClickListener(this);
-        echckout.setOnClickListener(this);
+        locationtext = (EditText) findViewById(R.id.location);
+        f=(FloatingActionButton)findViewById(R.id.locfab);
+        textView=(TextView)findViewById(R.id.cur) ;
+        f.setOnClickListener(this);
         permissions.add(ACCESS_FINE_LOCATION);
         permissions.add(ACCESS_COARSE_LOCATION);
         permissions.add(RECEIVE_SMS);
@@ -79,9 +71,7 @@ EditText echckout;
         permissions.add(SEND_SMS);
 
 
-
-
-    permissionsToRequest = findUnAskedPermissions(permissions);
+        permissionsToRequest = findUnAskedPermissions(permissions);
         //get the permissions we have asked for before but are not granted..
         //we will store this in a global list to access later.
 
@@ -94,47 +84,35 @@ EditText echckout;
         }
 
 
-        Button btn = (Button) findViewById(R.id.btn);
 
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
                 locationTrack = new LocationTrack(MainActivity.this);
 
 
-                if(outdate==null||indate==null)
-                    Toast.makeText(getApplicationContext(),"Checkout or Checkin Dates could not be empty",Toast.LENGTH_LONG).show();
-
-
-             else  if (locationTrack.canGetLocation()) {
+                if (locationTrack.canGetLocation()) {
 
 
                     double longitude = locationTrack.getLongitude();
                     double latitude = locationTrack.getLatitude();
 
-                    if(longitude!=0.00&&latitude!=0.000) {
-                        if(indate.compareTo(Calendar.getInstance().getTime())<0)
-                        {Toast.makeText(getApplicationContext(),"Checkin date must be greater than Current date",Toast.LENGTH_LONG).show();
+                    if (longitude != 0.00 && latitude != 0.000) {
+
+                             Intent i = new Intent(getApplicationContext(), checkinout.class);
+                            locationTrack.stopListener();
+                        Toast.makeText(getApplicationContext(), longitude+".Please move to some other near place and try again", Toast.LENGTH_LONG).show();
+
+                        i.putExtra("longitude",longitude);
+                            i.putExtra("latitude",latitude);
+                            startActivity(i);
 
 
-                        }
-                       else if(outdate.compareTo(indate)<=0){
-                            Toast.makeText(getApplicationContext(),"Checkout date must be greater than Checkin",Toast.LENGTH_LONG).show();
-                        }
-                            else{
-                        SmsManager s=SmsManager.getDefault();
-                       // Toast.makeText(getApplicationContext(),indate.toString()+" "+outdate.toString(),Toast.LENGTH_LONG).show();
-                        s.sendTextMessage(Variables.serverno,null,"OYOH " + Double.toString(longitude) + " " + Double.toString(latitude)+" "+datein+" "+dateout,null,null);
-                        Intent i= new Intent(getApplicationContext(),SmsActivity.class);
-                        locationTrack.stopListener();
-
-                         startActivity(i);}
-
-                    }
-                    else
-                    {Toast.makeText(getApplicationContext(),"Unable to fetch the location.Please move to some other near place and try again",Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Unable to fetch the location.Please move to some other near place and try again", Toast.LENGTH_LONG).show();
 
                     }
 
@@ -231,48 +209,17 @@ EditText echckout;
 
     @Override
     public void onClick(View view) {
-        if(view==checkin||view==echckin)
+
+        if(locationtext.getText().toString().isEmpty()||locationtext.getText().toString()==null||locationtext.getText().toString().length()==0)
         {
-            getdate(1);
-           }
-        else if(view==checkout||view==echckout)
-        {
-            getdate(2);
-           }
-    }
+            Toast.makeText(getApplicationContext(),"Please enter the location",Toast.LENGTH_LONG).show();
+        }
+        else{
 
-
-    void getdate(final int  type)
-    { final Calendar c = Calendar.getInstance();
-      int  mYear = c.get(Calendar.YEAR);
-      int mMonth = c.get(Calendar.MONTH);
-      int mDay = c.get(Calendar.DAY_OF_MONTH);
-
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                new DatePickerDialog.OnDateSetListener() {
-
-                    @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-                      s=  ""+dayOfMonth+"/"+(monthOfYear+1)+"/"+year;
-
-                      //s=new StringBuilder().append(monthOfYear).append("/").append(dayOfMonth).append("/").append(year);
-
-                     if(type==1)
-                     {
-                         echckin.setText(s);
-                     datein=s;
-                     indate=new Date(year,monthOfYear,dayOfMonth);
-                     }
-                     else
-                     { dateout=s;
-                     echckout.setText(s); outdate=new Date(year,monthOfYear,dayOfMonth);}
-
-                    }
-                }, mYear, mMonth, mDay);
-        datePickerDialog.show();
-
+            Intent i=new Intent(MainActivity.this,checkinout.class);
+            i.putExtra("location",locationtext.getText().toString());
+            startActivity(i);
+        }
     }
 }
 

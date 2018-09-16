@@ -49,6 +49,9 @@ public class BookingController {
 		String lt = amt+" at "+Variables.addr.get(aCode[0])[1]+".  \n" + 
 				"Payable Amount = "+payable_amount+"\n"+ 
 				"Address:"+Variables.addr.get(aCode[0])[0]+"";
+
+
+		String lt= "OYOB #"+amt+"#"+Variables.addr.get(aCode[0])[1]+"#"+payable_amount+"#"+Variables.addr.get(aCode[0])[0];
 		System.out.println(lt);
 		
 		return lt;

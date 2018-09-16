@@ -16,9 +16,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
-/**
- * Created by anupamchugh on 28/11/16.
- */
 
 public class LocationTrack extends Service implements LocationListener {
 

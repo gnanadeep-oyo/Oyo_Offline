@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rectangleram"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="320dp"
+        android:lineSpacingExtra="6sp"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        android:text="WHERE ARE YOU LOOKING TO STAY?" />
+
+    <EditText
+        android:id="@+id/location"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="123dp"
+        android:layout_marginTop="350dp"
+        android:lineSpacingExtra="20sp"
+        android:hint="Ex. Lajpat Nagar"
+        android:backgroundTint="#b3ffffff"
+        android:inputType="text"
+        android:textSize="28sp"
+        android:textColor="#b3ffffff"
+        android:textColorHint="#b3ffffff"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/cur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="400dp"
+        android:lineSpacingExtra="8sp"
+        android:clickable="true"
+
+        android:textColor="#ffffff"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:text="Near Current Location →" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/locfab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="26dp"
+        android:layout_marginEnd="25dp"
+        android:backgroundTint="#ffffff"
+        android:src="@drawable/arrow"
+        android:text="→"
+        android:layout_marginRight="25dp"
+        android:layout_alignParentRight="true" />
+
+
+
+</RelativeLayout>

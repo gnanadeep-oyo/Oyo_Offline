@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_height="match_parent"
+android:background="#1ab64f"
+android:layout_width="match_parent"
+tools:context=".BookingConf">
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="89dp"
+    android:layout_centerHorizontal="true"
+    android:lineSpacingExtra="8sp"
+    android:textColor="#ffffff"
+    android:textSize="22sp"
+    android:text="Booking Successful" />
+
+
+<ImageView
+    android:id="@+id/imageView1"
+    android:layout_width="120dp"
+    android:layout_height="120dp"
+    android:layout_centerHorizontal="true"
+    android:layout_alignParentTop="true"
+
+    android:layout_marginTop="170dp"
+
+    android:src="@drawable/circle" />
+
+<ImageView
+    android:id="@+id/imageView"
+    android:layout_width="60dp"
+    android:layout_height="41dp"
+    android:layout_centerHorizontal="true"
+    android:layout_alignParentTop="true"
+
+    android:layout_marginTop="212dp"
+    android:src="@drawable/checkmark" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/rectangle"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
+        android:paddingBottom="3dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingStart="15dp">
+
+
+
+        <TextView
+            android:id="@+id/bookid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="8sp"
+            android:textColor="#ef4023"
+            android:paddingTop="9dp"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:text="BOOKING ID : STFU7483" />
+        <TextView
+            android:id="@+id/hotel"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="#de000000"
+            android:lineSpacingExtra="8sp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:text="OYO 147 Palak Residency"
+            />
+
+        <TextView
+            android:id="@+id/addr"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#de000000"
+            android:paddingBottom="4dp"
+            android:paddingTop="3dp"
+            android:lineSpacingExtra="8sp"
+            android:text="Chekuru Vimal Towers, Kukatpally, Hyderabad"
+            />
+
+        <TextView
+            android:id="@+id/dates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+
+            android:paddingBottom="4dp"
+            android:paddingTop="3dp"
+            android:textColor="#8a000000"
+            android:lineSpacingExtra="8sp"
+            android:text="27 Aug - 29 Aug"
+            />
+
+        <TextView
+            android:id="@+id/guest"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+
+            android:paddingBottom="4dp"
+            android:paddingTop="3dp"
+            android:textColor="#8a000000"
+            android:lineSpacingExtra="8sp"
+            android:text="2 Rooms · 5 Guests"
+            />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+
+
+        android:background="@drawable/rectangle"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+
+        >
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+
+            android:paddingBottom="4dp"
+            android:paddingTop="3dp"
+            android:textColor="#ef4023"
+            android:lineSpacingExtra="8sp"
+            android:text="₹ 2100"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingTop="6dp"
+            android:paddingLeft="3dp"
+            android:textColor="#8a000000"
+            android:lineSpacingExtra="8sp"
+            android:text=" to be paid at hotel"
+            />
+
+    </LinearLayout>
+    </LinearLayout>
+
+
+
+
+
+
+</RelativeLayout>

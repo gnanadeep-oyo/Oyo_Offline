@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -31,39 +33,31 @@ public class MessageAdapter extends ArrayAdapter<ChatBubble> {
         if (message.myMessage()) { // this message was sent by us so let's create a basic chat bubble on the right
 
             convertView = messageInflater.inflate(R.layout.left_chat_bubble, null);
-            holder.msg = (TextView) convertView.findViewById(R.id.txt_msg);
-            holder.htl=(TextView)convertView.findViewById(R.id.txt_msg1);
+            holder.price = (TextView) convertView.findViewById(R.id.price);
+            holder.htl=(TextView)convertView.findViewById(R.id.txt_msg);
+            holder.distance=(TextView)convertView.findViewById(R.id.dist); 
+            holder.oyoid=(TextView)convertView.findViewById(R.id.oyoid); 
+            holder.rate=(RatingBar)convertView.findViewById(R.id.ratingBar); 
             String getmsg=message.getContent();
 
             if(getmsg.contains("OYO_ID")) {
 
                 int index_id=getmsg.indexOf("OYO_ID");
                 String[] temp=getmsg.substring(index_id).split("#");
+                holder.price.setText(temp[3]);
 
-                holder.msg.setText(temp[2]+" ★"+"\n"+temp[0]+"\nDistance: "+temp[1]+"\n"+temp[3]);
-
+               // holder.price.setText(temp[2]+" ★"+"\n"+temp[0]+"\nDistance: "+temp[1]+"\n"+temp[3]);
                 holder.htl.setText(getmsg.substring(0,index_id-1));
-            }
-            else {
-                holder.htl.setText("");
-                if(!getmsg.contains("Unable"))
-                holder.msg.setText("Dear user,confirmed your booking: "+getmsg);
-                else
-                 holder.msg.setText(getmsg);
-
+                holder.oyoid.setText(temp[0]);
+                holder.distance.setText(temp[1]+" from you");
+                holder.rate.setRating(Float.parseFloat(temp[2]));
+                
             }
 
 
 
+
             convertView.setTag(holder);
-
-        } else { // this message was sent by someone else so let's create an advanced chat bubble on the left
-            convertView = messageInflater.inflate(R.layout.right_chat_bubble, null);
-            holder.msg = (TextView) convertView.findViewById(R.id.txt_msg);
-
-            holder.msg.setText(message.getContent());
-            convertView.setTag(holder);
-
 
         }
 
@@ -86,7 +80,10 @@ public class MessageAdapter extends ArrayAdapter<ChatBubble> {
     }
 }
   class ViewHolder {
-         public TextView msg;
+         public TextView price;
          public TextView htl;
+         public TextView distance;
+         public TextView oyoid;
+         public RatingBar rate;
   }
 

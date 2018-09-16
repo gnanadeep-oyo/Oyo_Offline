@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SmsActivity extends AppCompatActivity implements View.OnClickListener,OnItemClickListener {
+public class SmsActivity extends Activity implements OnItemClickListener {
 
     private static SmsActivity inst;
 
@@ -74,11 +75,8 @@ public class SmsActivity extends AppCompatActivity implements View.OnClickListen
 
 
         smsListView.setAdapter(adapter);
-       code=(EditText)findViewById(R.id.edittext_chatbox);
-       send=(Button)findViewById(R.id.button_chatbox_send);
        spinner=(ProgressBar)findViewById(R.id.progressBar);
        spinner.setVisibility(View.VISIBLE);
-       send.setOnClickListener(this);
        smsListView.setOnItemClickListener(this);
 
 
@@ -90,42 +88,32 @@ public class SmsActivity extends AppCompatActivity implements View.OnClickListen
 
     public void updateList(final String smsMessage) {
 
-
-        ChatBubble chbt = new ChatBubble(smsMessage, true);
-        ChatBubbles.add(chbt);
-
+        if(smsMessage.contains("Unable"))
+        {Toast.makeText(getApplicationContext(),smsMessage,Toast.LENGTH_LONG).show();
+            spinner.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);}
+        else if(smsMessage.contains("OYOB"))
+        {spinner.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            Intent i= new Intent(SmsActivity.this,BookingConf.class);
+            i.putExtra("book_conf",smsMessage);
+            startActivity(i);
+        }
+        else{
+            ChatBubble chbt = new ChatBubble(smsMessage, true);
+            ChatBubbles.add(chbt);
+        }
         if(!adapter.isEmpty())
         {spinner.setVisibility(View.GONE);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);}
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onClick(View view) {
 
-        SmsManager s=SmsManager.getDefault();
-        if(!code.getText().equals("")) {
-            s.sendTextMessage(Variables.serverno, null, "OYOID " + code.getText(), null, null);
-            Toast.makeText(getApplicationContext(), "Thanks for booking.Wait for Confirmation", Toast.LENGTH_LONG).show();
-
-            ChatBubble chbt = new ChatBubble(code.getText().toString(), false);
-                ChatBubbles.add(chbt);
-
-
-
-            adapter.notifyDataSetChanged();
-
-
-        code.setText("");
-        }
-
-    }
 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-
 
 
         ChatBubble c=adapter.getItem(i);
@@ -153,9 +141,9 @@ public class SmsActivity extends AppCompatActivity implements View.OnClickListen
                             SmsManager s=SmsManager.getDefault();
                             s.sendTextMessage(Variables.serverno, null, "OYOID" + y[0], null, null);
                             Toast.makeText(getApplicationContext(),"Thanks for booking.Wait for confirmation.",Toast.LENGTH_LONG).show();
-                            ChatBubble chtb = new ChatBubble(y[0], false);
-                            ChatBubbles.add(chtb);
-                            adapter.notifyDataSetChanged();
+                            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                            spinner.setVisibility(View.VISIBLE);
 
                             dialog.cancel();
                         }

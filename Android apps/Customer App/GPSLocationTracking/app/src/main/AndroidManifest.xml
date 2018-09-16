@@ -10,15 +10,13 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
+        android:layout_gravity="center"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="OYO OFFLINE"
-        android:layout_gravity="center"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".SmsActivity" />
 
         <receiver
@@ -29,14 +27,18 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".SplashScreen" android:noHistory="true">
-
+        <activity
+            android:name=".SplashScreen"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".BookingConf" />
+        <activity android:name=".checkinout" />
+        <activity android:name=".Guest"></activity>
     </application>
 
 </manifest>
