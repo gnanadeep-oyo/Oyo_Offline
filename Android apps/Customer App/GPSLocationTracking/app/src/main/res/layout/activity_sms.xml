@@ -47,7 +47,7 @@
 
 android:layout_centerInParent="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="225dp"
+        android:layout_marginTop="400dp"
 
         android:layout_centerHorizontal="true"
                     android:contentDescription="Hotels Search"
