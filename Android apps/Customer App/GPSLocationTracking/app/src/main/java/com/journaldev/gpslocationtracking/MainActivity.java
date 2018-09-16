@@ -25,6 +25,8 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -185,7 +187,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
             }
             count = DatabaseUtils.queryNumEntries(db, "Location");
-            Toast.makeText(getApplicationContext(),count+"",Toast.LENGTH_LONG).show();
             db.setTransactionSuccessful();
             db.endTransaction();
 

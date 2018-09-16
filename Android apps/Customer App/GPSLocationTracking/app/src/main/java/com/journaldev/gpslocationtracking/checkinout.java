@@ -31,6 +31,7 @@ public class checkinout extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dates);
 
+
         echckin=(EditText)findViewById(R.id.etext1);
         echckout=(EditText)findViewById(R.id.etext2);
         button=(FloatingActionButton)findViewById(R.id.datesfab1);
