@@ -130,7 +130,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                              Intent i = new Intent(getApplicationContext(), checkinout.class);
                             locationTrack.stopListener();
-                        Toast.makeText(getApplicationContext(), longitude+".Please move to some other near place and try again", Toast.LENGTH_LONG).show();
 
                         i.putExtra("longitude",longitude);
                             i.putExtra("latitude",latitude);
@@ -196,12 +195,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         {
 
            Cursor c= db.rawQuery("Select name from Location",null);
-
+           if(localities.isEmpty())
+           {
             while (c.moveToNext())
             {
                 localities.add(c.getString(0));
             }
-            c.close();
+            c.close();}
         }
     }
 

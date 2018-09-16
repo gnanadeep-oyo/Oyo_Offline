@@ -27,6 +27,10 @@
 
     <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.Light.DatePicker">
         <item name="android:headerBackground">@color/myine</item>
+        <item name="android:calendarViewStyle">@color/myine</item>
+
+
+
     </style>
 
 

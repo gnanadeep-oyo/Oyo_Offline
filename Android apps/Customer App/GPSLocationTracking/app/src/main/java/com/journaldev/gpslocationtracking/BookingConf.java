@@ -15,6 +15,10 @@ public class BookingConf extends Activity {
 TextView bookid,price,hotelname,addr,dates,guest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow(); // in Activity's onCreate() for instance
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.booking_conf);
